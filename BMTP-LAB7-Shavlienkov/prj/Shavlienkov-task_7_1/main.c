@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 #define MAX_LENGTH 1000
 
@@ -10,7 +11,14 @@ bool containsDeveloper(const char *sentence) {
     char *word = strtok(sentence, delimiters);
 
     while (word != NULL) {
-        if (strcmp(word, "девелопер") == 0 || strcmp(word, "Девелопер") == 0) {
+
+        for (int i = 0; i < strlen(word); i++) {
+            if ((word[i] >= 'A' && word[i] <= 'Z') || (word[i] >= 'А' && word[i] <= 'Я')) {
+                word[i] = word[i] + 32;
+            }
+        }
+
+        if (strcmp(word, "девелопер") == 0) {
             return true;
         }
         word = strtok(NULL, delimiters);
@@ -21,14 +29,14 @@ bool containsDeveloper(const char *sentence) {
 
 int main() {
 
-    system("chcp 1251 & cls");
+    system("chcp 65001 & cls");
 
     char sentence[MAX_LENGTH];
 
     printf("Введіть речення: ");
     fgets(sentence, sizeof(sentence), stdin);
 
-    sentence[strlen(sentence) - 1] = '\0';
+    sentence[strcspn(sentence, "\n")] = '\0';
 
     if (sentence[strlen(sentence) - 1] == '.') {
          if (containsDeveloper(sentence)) {

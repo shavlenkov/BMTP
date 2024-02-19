@@ -3,7 +3,7 @@
 
 int main()
 {
-    system("chcp 1251 & cls");
+    system("chcp 65001 & cls");
 
     int array[n];
 
